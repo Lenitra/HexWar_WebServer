@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Métadonnées -->
+  <meta charset="UTF-8">
+  <title>HexWar - TauLem Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bibliothèques CSS via CDN -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Polices Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- AOS pour les animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="../static/media/logo.png" />
+
+  
+  <!-- Style personnalisé -->
+  <style>
+    /* Style personnalisé */
+    html{
+          scroll-behavior: smooth;
+    }
+    body {
+      background-color: #0A0A0A;
+      color: #FFFFFF;
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6, .navbar-brand {
+      font-family: 'Orbitron', sans-serif;
+      color: #FFFFFF;
+    }
+    /* Navbar */
+    .navbar {
+      padding: 20px;
+      background: transparent;
+      transition: background 0.5s;
+    }
+    .navbar.scrolled {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    .navbar-nav .nav-link {
+      color: #FFFFFF;
+      margin-left: 20px;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+    .navbar-nav .nav-link:hover {
+      color : #00C9FF
+    }
+    /* Section Héroïque */
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url('../static/media/bg.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.7);
+    }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    .hero-content .btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #00C9FF, #92FE9D);
+      color: #FFFFFF;
+      border: none;
+      transition: transform 0.3s;
+    }
+    .hero-content .btn:hover {
+      transform: scale(1.05);
+    }
+    /* Sections */
+    section {
+      padding: 80px 0;
+    }
+    .section-title {
+      margin-bottom: 60px;
+      text-align: center;
+      position: relative;
+    }
+    .section-title h2 {
+      font-size: 2.5rem;
+      display: inline-block;
+      padding-bottom: 10px;
+      color: #FFFFFF;
+    }
+    .section-title h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #00C9FF, #92FE9D);
+      margin: 10px auto 0;
+    }
+    /* Section Le Jeu */
+    .features .feature {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+    .features .feature:hover {
+      transform: translateY(-10px);
+    }
+    .features .feature i {
+      font-size: 3rem;
+      color : #00C9FF;
+      margin-bottom: 20px;
+    }
+    .features .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #FFFFFF;
+    }
+    .features .feature p {
+      color: #AAAAAA;
+    }
+    /* Section Vidéo */
+    .video-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-section iframe {
+      width: 100%;
+      height: 500px;
+    }
+    /* Pied de Page */
+    footer {
+      background: #000000;
+      padding: 40px 0;
+      color: #AAAAAA;
+      text-align: center;
+    }
+    footer .social-icons a {
+      color: #FFFFFF;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    footer .social-icons a:hover {
+      color : #00C9FF;
+    }
+    /* Animations */
+    [data-aos] {
+      opacity: 0;
+      transition-property: transform, opacity;
+    }
+    /* Responsive */
+    @media (max-width: 767px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">HexWar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color: #FFFFFF;"></i></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#le-jeu">Le Jeu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top">Classements</a></li>
+          <li class="nav-item"><a class="nav-link" href="/map" target="_blank">La carte <small>(beta)</small></a></li>
+          <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Section Héroïque -->
+  <section id="accueil" class="hero">
+    <div class="container hero-content" data-aos="fade-up">
+      <h1>Bienvenue dans HexWar</h1>
+      <p>Le jeu de stratégie ultime sur carte hexagonale. Conquérez, construisez et dominez.</p>
+      <a href="#le-jeu" class="btn">Découvrir le Jeu</a>
+    </div>
+  </section>
+  
+
+
+<style>
+  /* Section Téléchargement */
+.download-platform {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: transform 0.3s;
+  margin-bottom: 30px;
+}
+.download-platform:hover {
+  transform: translateY(-10px);
+}
+.download-platform i {
+  color: #00C9FF;
+  margin-bottom: 15px;
+}
+.download-platform h3 {
+  color: #FFFFFF;
+  margin-bottom: 15px;
+}
+.download-platform .btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #00C9FF, #92FE9D);
+  color: #FFFFFF;
+  border: none;
+  transition: transform 0.3s;
+}
+.download-platform .btn:hover {
+  transform: scale(1.05);
+}
+
+</style>
+
+<!-- Section Téléchargement -->
+<section id="le-jeu">
+  <div class="container">
+    <div class="section-title">
+      <h2>Téléchargement</h2>
+    </div>
+    <div class="row">
+      <!-- Plateforme Windows -->
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="download-platform text-center">
+          <i class="fab fa-windows fa-3x"></i>
+          <h3>Windows</h3>
+          <a href="#" class="btn">En développement</a>
+        </div>
+      </div>
+      <!-- Plateforme macOS -->
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="download-platform text-center">
+          <i class="fab fa-android fa-3x"></i>
+          <h3>Android</h3>
+          <a href="#" class="btn">En développement</a>
+        </div>
+      </div>
+      <!-- Plateforme Linux -->
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="download-platform text-center">
+          <i class="fab fa-linux fa-3x"></i>
+          <h3>Linux</h3>
+          <a href="#" class="btn">En développement</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <style>
+    /* Styles pour la section Classements */
+    .leaderboard {
+      background-color: #000; /* Fond noir */
+      color: #fff; /* Texte blanc */
+      padding: 50px 0;
+    }
+
+    .leaderboard .section-title h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .leaderboard .nav-tabs .nav-link {
+      color: #fff; /* Couleur du texte des onglets */
+      background-color: transparent; /* Fond transparent */
+      border: 1px solid #444; /* Bordure grise */
+      margin-right: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .leaderboard .nav-tabs .nav-link.active {
+      color: #000; /* Texte noir */
+      background-color: #00C9FF; /* Fond doré pour l'onglet actif */
+      border-color: #444; /* Bordure dorée */
+    }
+
+    .leaderboard .nav-tabs .nav-link:hover {
+      background-color: #00C9FF;
+      color: #000; /* Texte noir */
+    }
+
+    .leaderboard .table {
+      color: #fff; /* Texte blanc dans les tableaux */
+      background-color: #222; /* Fond gris foncé pour le tableau */
+      border: 1px solid #444; /* Bordure grise */
+    }
+
+    .leaderboard .table th, .leaderboard .table td {
+      border-color: #444; /* Bordures grises pour les cellules */
+    }
+
+    .leaderboard .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #333; /* Fond pour les lignes impaires */
+    }
+
+  .leaderboard .table-striped tbody tr:nth-of-type(even) {
+    background-color: #444; /* Fond pour les lignes paires */
+  }
+
+  .leaderboard .table tbody tr:hover {
+    background-color: #555; /* Fond plus clair au survol */*
+  }
+
+
+
+  </style>
+
+<!-- Section Classements -->
+<section id="top" class="leaderboard">
+  <div class="container">
+    <div class="section-title">
+      <h2>Classements</h2>
+    </div>
+    <ul class="nav nav-tabs" id="leaderboardTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="territoires-tab" data-toggle="tab" href="#territoires" role="tab" aria-controls="territoires" aria-selected="false">Territoires</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" id="argent-tab" data-toggle="tab" href="#argent" role="tab" aria-controls="argent" aria-selected="true">Argent</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="unites-tab" data-toggle="tab" href="#unites" role="tab" aria-controls="unites" aria-selected="false">Unités</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="leaderboardTabsContent">
+
+        <!-- Onglet Territoires -->
+        <div class="tab-pane fade show active" id="territoires" role="tabpanel" aria-labelledby="territoires-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Nom du Joueur</th>
+                <th>Nombre de Territoires</th>
+              </tr>
+            </thead>
+            <tbody id="territory"></tbody>
+          </table>
+        </div>
+
+      <!-- Onglet Argent -->
+      <div class="tab-pane fade show" id="argent" role="tabpanel" aria-labelledby="argent-tab">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Nom du Joueur</th>
+              <th>Argent</th>
+            </tr>
+          </thead>
+          <tbody id="money"></tbody>
+        </table>
+      </div>
+      <!-- Onglet Unités -->
+      <div class="tab-pane fade" id="unites" role="tabpanel" aria-labelledby="unites-tab">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Nom du Joueur</th>
+              <th>Nombre d'Unités</th>
+            </tr>
+          </thead>
+          <tbody id="units"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  
+  <!-- Section Support -->
+  <section id="support">
+    <div class="container">
+      <div class="section-title">
+        <h2>Support</h2>
+      </div>
+      <div class="row" data-aos="fade-up">
+        <div class="col-md-6">
+          <h3>Besoin d'aide ?</h3>
+          <p>Consultez notre FAQ ou contactez notre équipe de support dédiée.</p>
+          <a href="#" class="btn">FAQ</a>
+        </div>
+        <div class="col-md-6">
+          <h3>Contactez nous !</h3>
+          <p>Venez directement nous rapporter votre problème, l'équipe se fera un plaisir de vous répondre.</p>
+          <div class="social-icons">
+            <a href="https://discord.gg/7sgXasv9Y" target="_blank"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Pied de Page -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 TauLem Studio. Tous droits réservés.</p>
+      <div class="social-icons">
+        <!-- <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a> -->
+        <a href="https://discord.gg/7sgXasv9Y" target="_blank"><i class="fab fa-discord"></i></a>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Bibliothèques JS via CDN -->
+  <!-- jQuery et Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- AOS JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <!-- Script personnalisé -->
+  <script>
+    // Initialisation de AOS
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+    // Changement de fond de la navbar au scroll
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 50) {
+        $('.navbar').addClass('scrolled');
+      } else {
+        $('.navbar').removeClass('scrolled');
+      }
+    });
+  </script>
+
+<!-- ACTUALISATION DU LEADERBOARD -->
+<script>
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const leaderboardTabs = ["money", "territory", "units"];
+
+    // Fonction pour charger les données du leaderboard
+    async function loadLeaderboard() {
+      try {
+        const response = await fetch("/leaderboard/all");
+        const data = await response.json();
+
+        leaderboardTabs.forEach((category) => {
+          const tableBody = document.querySelector(`#${category}`);
+
+          if (!tableBody) {
+            console.error(`Table body for category "${category}" not found.`);
+            return;
+          }
+
+          tableBody.innerHTML = ""; // Efface le contenu existant
+
+          data[category].forEach(([player, score], index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${player}</td>
+            <td>${score}</td>
+          `;
+            tableBody.appendChild(row);
+          });
+        });
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+      }
+    }
+
+    // Charger les données à l'ouverture de la page
+    loadLeaderboard();
+  });
+
+
+</script>
+</body>
+</html>
