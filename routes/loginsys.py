@@ -2,7 +2,7 @@ from general import HERE
 from __main__ import app
 import json
 from flask import jsonify, request, session
-import datetime
+import os
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -17,3 +17,22 @@ def login():
         money = users[username]["money"]
         return jsonify({"username": username, "color": color, "money": money})
     return "NOPE"
+
+
+
+
+
+@app.route("/version", methods=["GET"])
+def version():
+
+    data = request.get_json()
+
+    try:
+        version = os.listdir(HERE + "/../builds")[0].split("_")[1]
+    except:
+        version = "0.0.0"
+    
+    if data["version"] != version:
+        return "NOPE"
+    
+    return "OK", 200
