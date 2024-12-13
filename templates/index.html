@@ -277,31 +277,7 @@
   </div>
 </section>
 
-<!-- permet d'actualiser les liens avec la version du jeu récupérée via la route /get-version -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const btnWindowsDownload = document.getElementById("btn-windows-download");
-    const btnLinuxDownload = document.getElementById("btn-linux-download");
 
-    async function updateDownloadLinks() {
-      try {
-        const response = await fetch("/get-version");
-        const data = await response.json();
-
-        if (data.version) {
-          const version = data.version;
-
-          btnWindowsDownload.href = `../builds/HexWar_${version}_windows.zip`;
-          btnLinuxDownload.href = `../builds/HexWar_${version}_linux.zip`;
-        }
-      } catch (error) {
-        console.error("Erreur lors de la récupération de la version du jeu :", error);
-      }
-    }
-
-    updateDownloadLinks();
-  });
-</script>
 
 
   <style>
