@@ -26,6 +26,7 @@ def login():
 def version():
 
     data = request.get_json()
+    print(data)
 
     try:
         version = os.listdir(HERE + "/../builds")[0].split("_")[1]
