@@ -22,7 +22,7 @@ def login():
 
 
 
-@app.route("/version", methods=["GET"])
+@app.route("/version", methods=["GET", "POST"])
 def version():
 
     data = request.get_json()
