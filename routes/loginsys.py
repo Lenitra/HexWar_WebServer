@@ -31,9 +31,19 @@ def version():
     try:
         version = os.listdir(HERE + "/../builds")[0].split("_")[1]
     except:
-        version = "0.0.0"
+        return "OK", 200
     
     if data["version"] != version:
         return "NOPE"
     
     return "OK", 200
+
+
+@app.route("/get-version", methods=["GET"])
+def get_version():
+    try:
+        version = os.listdir(HERE + "/../builds")[0].split("_")[1]
+    except:
+        return jsonify({"version": "0.0.0"})
+
+    return jsonify({"version": version})
