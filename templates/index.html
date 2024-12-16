@@ -282,10 +282,23 @@
         </div>
       </div>
     </div>
+    <small id="game-version"></small>
   </div>
 </section>
 
-
+<script>
+  // Récupération de la version du jeu
+  fetch("/get-version")
+    .then((response) => response.json())
+    .then((data) => {
+      const gameVersion = document.getElementById("game-version");
+      gameVersion.textContent = `Version du jeu : ${data.version}`;
+      console.log("Version du jeu :", data.version);
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la récupération de la version du jeu :", error);
+    });
+</script>
 
   <style>
     /* Styles pour la section Classements */
