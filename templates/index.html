@@ -262,7 +262,7 @@
         <div class="download-platform text-center">
           <i class="fab fa-windows fa-3x"></i>
           <h3>Windows</h3>
-          <a href="#" class="btn">En développement</a>
+          <a href="#" class="btn" id="btn-dwl-windows">Chargement...</a>
         </div>
       </div>
       <!-- Plateforme Linux -->
@@ -270,7 +270,7 @@
         <div class="download-platform text-center">
           <i class="fab fa-linux fa-3x"></i>
           <h3>Linux</h3>
-          <a href="#" class="btn">En développement</a>
+          <a href="#" class="btn" id="btn-dwl-linux">Chargement...</a>
         </div>
       </div>
       <!-- Plateforme Android -->
@@ -287,13 +287,26 @@
 </section>
 
 <script>
-  // Récupération de la version du jeu
+  // Récupération de la version du jeu et mise a jour du bouton de téléchargement
   fetch("/get-version")
     .then((response) => response.json())
     .then((data) => {
       const gameVersion = document.getElementById("game-version");
       gameVersion.textContent = `Version du jeu : ${data.version}`;
-      console.log("Version du jeu :", data.version);
+      
+      // Mise à jour des liens de téléchargement
+      const btnDwlWindows = document.getElementById("btn-dwl-windows");
+      const btnDwlLinux = document.getElementById("btn-dwl-linux");
+
+      btnDwlWindows.textContent = "Télécharger";
+      btnDwlWindows.href = "builds/HexWar_" + data.version + "_windows.zip";
+      btnDwlWindows.download = "";
+
+      btnDwlLinux.textContent = "Télécharger";
+      btnDwlLinux.href = "builds/HexWar_" + data.version + "_linux.zip";  
+      btnDwlLinux.download = "";
+
+
     })
     .catch((error) => {
       console.error("Erreur lors de la récupération de la version du jeu :", error);

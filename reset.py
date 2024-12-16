@@ -16,7 +16,6 @@ if DEBUG == "map" or DEBUG == "both":
 
 
 
-
     for i in range (mapsize):
         for j in range(mapsize):
             map[f"{i}:{j}"] = {
