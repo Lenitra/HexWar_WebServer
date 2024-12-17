@@ -375,6 +375,6 @@ def get_adjacent_hexes(x, z, radius=1):
             ny = cy + dy
             nz = cz + dz
             col_offset, row_offset = cube_to_evenq_offset(nx, ny, nz)
-            if 0 <= col_offset < MAPSIZE and 0 <= row_offset < MAPSIZE:
+            if 0 <= col_offset <= MAPSIZE and 0 <= row_offset <= MAPSIZE:
                 toret.append({"x": col_offset, "z": row_offset})
     return toret
