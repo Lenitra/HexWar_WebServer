@@ -356,6 +356,67 @@ def update_resources(player):
         return True
 
 
+
+# Vérification des hexes et des joueurs
+def check_hexes():
+    with open(HERE + "/data/map.json", "r") as f:
+        hexes = json.load(f)
+
+    with open(HERE + "/data/users.json", "r") as f:
+        users = json.load(f)
+        
+    for k, v in hexes.items():
+        
+        # si le joueur n'existe pas on reset le hex
+        if v["owner"] != "":
+            if v["owner"] not in users:
+                v["owner"] = ""
+                v["units"] = 0
+                v["type"] = ""
+
+        # si le hex n'est pas relié au HQ du joueur on reset le hex
+        if v["owner"] != "":
+            if not is_connected_to_hq(v["owner"], k):
+                v["owner"] = ""
+                v["units"] = 0
+                v["type"] = ""
+
+        # si un hex n'a pas de owner on remet les valeurs par défaut
+        if v["owner"] == "":
+            if v["units"] != 0:
+                v["units"] = 0
+            if v["type"] != "":
+                v["type"] = ""
+
+
+    # Enregistrer les nouvelles infos de la map
+    with open(HERE + "/data/map.json", "w") as f:
+        json.dump(hexes, f, indent=4)
+
+
+
+# Fonction pour obtenir le HQ d'un joueur
+def get_hq(player):
+    with open(HERE + "/data/map.json", "r") as f:
+        hexes = json.load(f)
+
+    for k, v in hexes.items():
+        if v["owner"] == player and v["type"].split(":")[0] == "hq":
+            return k
+
+    return ""
+
+#  Vérification qu'un hex est relié au HQ du joueur
+def is_connected_to_hq(player, hex):
+    hq = get_hq(player)
+    if hq == "":
+        return False
+    path = find_path(hq, hex, player)
+    return path != []
+
+
+
+
 # Fonction auxiliaire pour obtenir les hexagones adjacents avec un rayon variable
 # Fonctions de conversion entre les coordonnées offset (grille) et cubiques
 def evenq_offset_to_cube(col, row):
