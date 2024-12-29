@@ -1,4 +1,4 @@
-from general import HERE, MAPSIZE  # pylint: disable=import-error
+from general import HERE, MAPSIZE 
 from __main__ import app
 import json
 from flask import jsonify, session, request
@@ -162,6 +162,15 @@ def move_units(origin, destination, units):
     ):
         return "NOPE"
 
+    # si l'hexagone de destination est adjacent à un HQ qui n'appartient pas au joueur
+    for k in get_adjacent_hexes(*map(int, destination.split(":"))):
+        key = f"{k['x']}:{k['z']}"
+        if (
+            hexes[key]["type"].split(":")[0] == "hq"
+            and hexes[key]["owner"] != hexes[origin]["owner"]
+        ):
+            return "NOPE"
+
     # un déplacement d'unités va se faire
     hexes[origin]["units"] -= units
 
@@ -216,7 +225,7 @@ def get_hex(player):
     # Parcourir les hexagones du joueur et ajouter les hexagones adjacents
     tmp = result.copy()
     for k, v in tmp.items():
-        current_radius = 2
+        current_radius = 1
         x, z = map(int, k.split(":"))
 
         if v["type"].startswith("radar:"):
