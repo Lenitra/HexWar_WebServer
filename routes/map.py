@@ -162,6 +162,15 @@ def move_units(origin, destination, units):
     ):
         return "NOPE"
 
+    # si l'hexagone de destination est adjacent à un HQ qui n'appartient pas au joueur
+    for k in get_adjacent_hexes(*map(int, destination.split(":"))):
+        key = f"{k['x']}:{k['z']}"
+        if (
+            hexes[key]["type"].split(":")[0] == "hq"
+            and hexes[key]["owner"] != hexes[origin]["owner"]
+        ):
+            return "NOPE"
+
     # un déplacement d'unités va se faire
     hexes[origin]["units"] -= units
 
