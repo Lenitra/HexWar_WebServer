@@ -26,7 +26,7 @@ def gameLoop():
 
     print("LOOP STARTED")
 
-    UPDATE_IA_HOURS = [0, 6, 12, 18]
+    UPDATE_IA_HOURS = [0, 4, 8, 12, 16, 20]
 
     UPDATE_PLAYER_CHECKS_COUNTDOWN = 5
 
