@@ -111,3 +111,5 @@ def aiCycle():
         json.dump(map, f, indent=4)
 
 
+if __name__ == "__main__":
+    aiCycle()
