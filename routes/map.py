@@ -367,7 +367,8 @@ def check_hexes():
         users = json.load(f)
         
     for k, v in hexes.items():
-        
+        if v["owner"] == "Nyx":
+            continue
         # si le joueur n'existe pas on reset le hex
         if v["owner"] != "":
             if v["owner"] not in users:
