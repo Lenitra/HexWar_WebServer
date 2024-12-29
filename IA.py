@@ -112,4 +112,6 @@ def aiCycle():
 
 
 if __name__ == "__main__":
-    aiCycle()
+    iter = input("Combien de fois voulez-vous executer l'IA : ")
+    for i in range(int(iter)):
+        aiCycle()
