@@ -183,6 +183,7 @@ def move_units(origin, destination, units):
         if hexes[destination]["units"] < 0:
             hexes[destination]["units"] = abs(hexes[destination]["units"])
             hexes[destination]["owner"] = hexes[origin]["owner"]
+            hexes[destination]["type"] = ""
 
     # DEPLACEMENT
     # sinon on déplace les unités
