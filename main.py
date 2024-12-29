@@ -26,7 +26,7 @@ def gameLoop():
 
     print("LOOP STARTED")
 
-    UPDATE_IA_HOURS = [0, 4, 8, 12, 16, 20]
+    UPDATE_IA_COUNTDOWN = 60
 
     UPDATE_PLAYER_CHECKS_COUNTDOWN = 5
 
@@ -36,15 +36,21 @@ def gameLoop():
         minutes = datetime.datetime.now().minute
 
         # on vérifie si l'heure actuelle est dans la liste des heures de mise à jour de l'ia
-        if hour in UPDATE_IA_HOURS and minutes == 0:
+        if minutes + hour * 60 % UPDATE_IA_COUNTDOWN == 0:
             try:
                 iaCycle()
             except Exception as e:
-                print(f"error: {e}")
+                print(e)
+                print("Erreur lors de la mise à jour de l'IA")
+
 
         # on vérifie si le compte à rebours pour les vérifications des joueurs est terminé
-        if minutes % UPDATE_PLAYER_CHECKS_COUNTDOWN == 0:
-            usersChecks()
+        if minutes +hour *60 % UPDATE_PLAYER_CHECKS_COUNTDOWN == 0:
+            try:
+                usersChecks()
+            except Exception as e:
+                print(e)
+                print("Erreur lors de la vérification des utilisateurs")
 
         # on attend la minute suivante
         now = datetime.datetime.now()

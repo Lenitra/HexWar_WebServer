@@ -55,7 +55,7 @@ def leaderboard3():
         map = json.load(f)
 
     for tile in map.values():
-        if tile["owner"] == "" or tile["owner"] == "Nyx":
+        if tile["owner"] == "" or tile["owner"] == "Nyx": # on ne compte pas les cases vides ou appartenant à l'ia
             continue
         try:
             toret[tile["owner"]] += tile["units"]
