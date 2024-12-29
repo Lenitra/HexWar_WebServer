@@ -381,6 +381,14 @@ def check_hexes():
                 v["units"] = 0
                 v["type"] = ""
 
+        # Définir les propriétaires des hexagones adjacents à un HQ
+        if v["type"].split(":")[0] == "hq":
+            for adj in get_adjacent_hexes(*map(int, k.split(":"))):
+                key = f"{adj['x']}:{adj['z']}"
+                if key in hexes:
+                    hexes[key]["owner"] = v["owner"]
+
+
         # si un hex n'a pas de owner on remet les valeurs par défaut
         if v["owner"] == "":
             if v["units"] != 0:
